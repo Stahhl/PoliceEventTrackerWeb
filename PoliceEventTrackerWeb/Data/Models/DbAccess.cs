@@ -20,10 +20,11 @@ namespace PoliceEventTrackerWeb.Data.Models
 
         private PoliceEventDbContext context;
         private ApplicationSettings applicationSettings;
+        private Update lastUpdate;
 
         #region Operations
         //Add items from api respons to db
-        internal async Task<Update> AddItemsToDb(List<ApiEvent> apiItems, Update update)
+        internal async Task<Update> AddItems(List<ApiEvent> apiItems, Update update)
         {
             try
             {
@@ -43,6 +44,7 @@ namespace PoliceEventTrackerWeb.Data.Models
                 await context.Updates.AddAsync(update);
                 await context.SaveChangesAsync();
 
+                lastUpdate = update;
                 return update;
             }
             catch (Exception e)

@@ -5,6 +5,8 @@ using PoliceEventTrackerWeb.Domain.Models;
 using PoliceEventTrackerWeb.Data.Models;
 using System.Linq;
 using System.Collections.Generic;
+//Statics
+using  PoliceEventTrackerWeb.Data.Models.CachedOperations;
 
 namespace PoliceEventTrackerWeb.Data
 {
@@ -14,10 +16,20 @@ namespace PoliceEventTrackerWeb.Data
         {
             dbAccess = new DbAccess(settings);
             apiAccess = new ApiAccess(settings);
+
+            Sync();
+        }
+        public async void Sync()
+        {
+            lastUpdate = await GetLatestUpdate();
         }
 
         private DbAccess dbAccess;
         private ApiAccess apiAccess;
+
+        private Update lastUpdate;
+
+        //private GetHighestEventId getHighestEventId;
 
         //Gets items from api, compares them to items in db.
         //If there are items in api response that dont exist in the db add them.
@@ -44,7 +56,8 @@ namespace PoliceEventTrackerWeb.Data
                 };
 
                 //convert it to db models, add and save them
-                update = await dbAccess.AddItemsToDb(eventsToAdd.ToList(), update);
+                update = await dbAccess.AddItems(eventsToAdd.ToList(), update);
+                lastUpdate = update;
             }
 
             return update;
@@ -53,29 +66,23 @@ namespace PoliceEventTrackerWeb.Data
         #region Public operations
         public async Task<int> GetHighestEventId()
         {
-            var events = await dbAccess.GetAllEvents();
-
-            return events != null ? events.Max(e => e.EventId) : 0;
+            return await CachedGetHighestEventId.MyFunction(dbAccess, lastUpdate);
         }
         public async Task<List<Location>> GetTopLocations()
         {
-            var locations = await dbAccess.GetAllLocations();
-
-            locations = locations.OrderByDescending(x => x.Events.Count).ToList();
-
-            return locations;
+            return await CachedGetTopLocations.MyFunction(dbAccess, lastUpdate);
         }
         public async Task<Update> GetLatestUpdate()
         {
             var updates = await dbAccess.GetAllUpdates();
 
-            return updates.OrderByDescending(x => x.DateTime).First();
+            var update = updates.OrderByDescending(x => x.DateTime).First();
+
+            return update;
         }
         public async Task<List<Event>> GetLatestEvents(int amount)
         {
-            var events = await dbAccess.GetAllEvents();
-
-            return events.OrderByDescending(x => x.DateTime).Take(amount).ToList();
+            return await CachedGetLatestEvents.MyFunction(dbAccess, lastUpdate, amount);
         }
         public async Task<Event> GetEventById(int id)
         {

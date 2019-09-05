@@ -39,9 +39,12 @@ namespace PoliceEventTrackerWeb
 
             //add 'IConfiguration' and 'DataAccess' to Dependency injection to access them from other classes and projects
             services.AddDbContext<PoliceEventDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+
+            var settings = new ApplicationSettings(Configuration);
+
             services.AddSingleton(Configuration);
-            services.AddSingleton(new ApplicationSettings(Configuration));
-            services.AddScoped<DataAccess>();
+            services.AddSingleton(settings);
+            services.AddSingleton(new DataAccess(settings));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
