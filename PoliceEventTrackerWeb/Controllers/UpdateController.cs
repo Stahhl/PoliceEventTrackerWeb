@@ -31,11 +31,11 @@ namespace PoliceEventTrackerWeb.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: Update/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        //// GET: Update/Details/5
+        //public ActionResult Details(int id)
+        //{
+        //    return View();
+        //}
 
         // GET: Update/Create
         public ActionResult Create()

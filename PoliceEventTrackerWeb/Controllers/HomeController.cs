@@ -16,39 +16,9 @@ namespace PoliceEventTrackerWeb.App.Controllers
 
         private DataAccess dataAccess;
 
-        public IActionResult UpdateDatabaseResult(Update update)
-        {
-            var eventsInUpdate = update.Events;
-
-            return View(eventsInUpdate);
-        }
-        public async Task<IActionResult> Errors()
-        {
-            var errors = await dataAccess.RemoveAllErrors();
-
-            return RedirectToAction(nameof(Index));
-        }
         public IActionResult Index()
         {
             return View();
-        }
-        public async Task<IActionResult> DisplayLatestEvents()
-        {
-            var events = await dataAccess.GetLatestEvents(50);
-
-            return View(events);
-        }
-        public async Task<IActionResult> Details(int id)
-        {
-            var e = await dataAccess.GetEventById(id);
-
-            return View(e);
-        }
-        public async Task<IActionResult> TopLocations()
-        {
-            var locations = await dataAccess.GetTopLocations();
-
-            return View(locations);
         }
         public IActionResult Privacy()
         {

@@ -17,10 +17,10 @@ namespace PoliceEventTrackerWeb.Data.Models
         {
             applicationSettings = settings;
         }
-        public PoliceEventDbContext(DbContextOptions<PoliceEventDbContext> options)
-            : base(options)
-        {
-        }
+        //public PoliceEventDbContext(DbContextOptions<PoliceEventDbContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public DbSet<Event> Events { get; set; }
         public DbSet<Location> Locations { get; set; }

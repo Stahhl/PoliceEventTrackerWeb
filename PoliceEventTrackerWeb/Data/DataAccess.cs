@@ -29,8 +29,6 @@ namespace PoliceEventTrackerWeb.Data
 
         private Update lastUpdate;
 
-        //private GetHighestEventId getHighestEventId;
-
         //Gets items from api, compares them to items in db.
         //If there are items in api response that dont exist in the db add them.
         public async Task<Update> UpdateDatabase()

@@ -4,57 +4,61 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detaljer</h1>
 
 <div>
-    <h4>Event</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EventId)
+        <dt class="col-sm-2">
+            Id:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EventId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateTime)
+        <dt class="col-sm-2">
+            Datum & Tid:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DateTime)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class="col-sm-2">
+            Rubrik:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Summary)
+        <dt class="col-sm-2">
+            Beskrivning:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Summary)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Url)
+        <dt class="col-sm-2">
+            Url:
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Url)
+        <dd class="col-sm-10">
+            <a href="@Html.DisplayFor(model => model.Url)">@Html.DisplayFor(model => model.Url)</a>
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
+        <dt class="col-sm-2">
+            Typ:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Type)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Coordinate)
+        <dt class="col-sm-2">
+            Plats:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Location.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Koordinat:
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Coordinate)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Event" asp-action="DisplayLatestEvents">Tillbaks</a>
 </div>

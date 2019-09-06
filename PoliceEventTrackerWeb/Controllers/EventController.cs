@@ -31,9 +31,11 @@ namespace PoliceEventTrackerWeb.Controllers
             return View(events);
         }
         // GET: Event/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var e = await dataAccess.GetEventById(id);
+
+            return View(e);
         }
 
         // GET: Event/Create
